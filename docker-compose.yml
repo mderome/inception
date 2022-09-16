@@ -1,0 +1,15 @@
+version: '3'
+services:
+  db:
+    build:
+      dockerfile: /requirements/MariaDB/Dockerfile
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    volumes:
+      maria_db:/var/lib/mysql/
+    networks:
+      - backend
+    env_file:
+      - .env
+
