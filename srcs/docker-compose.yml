@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db:
+    build:
+      dockerfile: /requirements/MariaDB/Dockerfile
+    image: mariadb
+    container_name: mariadb
+    restart: always
+    volumes:
+      maria_db:/var/lib/mysql/
+    networks:
+      - backend
+    env_file:
+      - .env
+
+networks:
+  backend:
+
+volumes:
+  db_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/mderome/data/db_data
+      o: bind
