@@ -1,21 +1,64 @@
 version: '3'
 services:
+  # Mariadb config
   mariadb:
-    build:
-      context: ./requirements/MariaDB/.
-      dockerfile: ./Dockerfile
-    image: mariadb
+    build :
+      context : ./requirements/MariaDB/.
+      dockerfile : ./Dockerfile
+    image : mariadb
     container_name: mariadb
+    restart : always
+    volumes:
+      - db_data:/var/lib/mysql/
+    networks:
+      - backend
+    environment:
+      - WP_DB=${WP_DB}
+      - MARIADB_HOST=${MARIADB_HOST}
+      - MARIADB_ROOT_PWD=${MARIADB_ROOT_PWD}
+      - MARIADB_USER=${MARIADB_USER}
+      - MARIADB_USER_PWD=${MARIADB_USER_PWD}
+    env_file :
+      - .env
+
+  nginx:
+    build:
+      context : ./requirements/nginx/.
+      dockerfile : ./Dockerfile
+    image: nginx
+    container_name: nginx
+    depends_on:
+      - wordpress
+    ports:
+      - "443::433"
     restart: always
     volumes:
-      - ./maria_db:/var/lib/mysql/
+      - wordpress:/var/www/html/
     networks:
+      - frontend
+    env_file:
+      - .env
+
+  wordpress:
+    build:
+      context : ./requirements/wordpress/.
+      dockerfile : ./Dockerfile
+    image: wordpress
+    container_name: wordpress
+    depends_on:
+      - mariadb
+    restart: always
+    volumes:
+      - db_data:/var/www/html
+    networks:
+      - frontend
       - backend
     env_file:
       - .env
 
 networks:
   backend:
+  frontend:
 
 volumes:
   db_data:
@@ -24,3 +67,12 @@ volumes:
       type: none
       device: /home/mderome/data/db_data
       o: bind
+
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/mderome/data/wp_data
+      o: bind
+
+

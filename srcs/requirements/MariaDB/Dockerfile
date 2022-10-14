@@ -1,7 +1,7 @@
 FROM debian:buster
 
-RUN apt-get update
-RUN apt-get install -y mariadb-server mariadb-client gettext-base
+
+RUN apt update -y && apt install mariadb-server mariadb-client gettext-base -y
 
 RUN chown -R mysql:mysql /var/lib/mysql
 RUN chmod -R go-rx /var/lib/mysql

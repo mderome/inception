@@ -1,15 +1,22 @@
 DOCKER = docker-compose
 
-HOME = /home/mderome
+HOME = /home/mderome/
 
-.PHONY: stop
+.PHONY: stop all clean fclean re
 
-all :
-	mkdir -p $(HOME)/data/wordpress
-	mkdir -p $(HOME)/data/maria_db
-	$(DOCKER) -f srcs/docker-compose.yml build
-	$(DOCKER) -f srcs/docker-compose.yml up --build
+all		:
+	mkdir -p $(HOME)data/wp_data
+	mkdir -p $(HOME)data/db_data
+	$(DOCKER) -f srcs/docker-compose.yml --env-file ./srcs/.env up --build
 
-stop :
+stop	:
 	$(DOCKER) -f srcs/docker-compose.yml stop
 
+clean:
+	docker volume ls -qf dangling=true | xargs -r docker volume rm
+	docker system prune -f -a
+
+fclean: stop clean
+	sudo rm -rf ${HOME}data
+
+re : fclean all
