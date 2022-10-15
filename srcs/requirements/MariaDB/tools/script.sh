@@ -11,4 +11,4 @@ then
 	service mysql stop | echo -n ""
 fi
 echo "Base de donnee deja creer"
-exec mysqld_safe
+exec mysqld

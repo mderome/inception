@@ -8,6 +8,8 @@ services:
     image : mariadb
     container_name: mariadb
     restart : always
+    ports:
+      - "3306::3306"
     volumes:
       - db_data:/var/lib/mysql/
     networks:
@@ -30,7 +32,7 @@ services:
     depends_on:
       - wordpress
     ports:
-      - "443::433"
+      - "443::443"
     restart: always
     volumes:
       - wordpress:/var/www/html/
@@ -47,6 +49,9 @@ services:
     container_name: wordpress
     depends_on:
       - mariadb
+    ports:
+      - "9000::9000"
+      - "3306::3306"
     restart: always
     volumes:
       - wordpress:/var/www/html

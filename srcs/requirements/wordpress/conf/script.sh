@@ -6,12 +6,15 @@ if  [ ! -f "$FILE" ]; then
 	if	[ -f /var/www/html/wp-config.php ]; then
 		rm /var/www/html/wp-config.php
 	fi
-	wp config create --path="/var/www/html/" --dbname=$WP_DB --dbuser=$MARIADB_USER --dbpass=$MARIADB_USER_PWD --allow-root --skip-check
+	wp config create --path="/var/www/html/" --dbname=$WP_DB --dbuser=$MARIADB_USER --dbpass=$MARIADB_USER_PWD --dbhost="mariadb" --allow-root --skip-check
 	echo "wp config create reussi"
-	wp core install --url="localhost" --title="mderome site" --admin_user="mderome" --admin_password="mderome.2014" --admin_email="mderome@student.42.fr" --path="/var/www/html/" --allow-root
+	sleep 10
+	wp core install --url="localhost" --title="mderome site" --admin_user="mderome" --admin_password="mderome.2014" --admin_email="mderome@student.42.fr" --path="/var/www/html/" --extra-php <<PHP
+define( 'WP_DEBUG', true );
+define( 'WP_DEBUG_LOG', true );
+PHP	--allow-root
 	wp user create draicus draicus@student.42.fr --role=author --user_pass="qwerty12" --allow-root
 	touch /var/www/html/.config_create
 fi
 echo "Config already done"
-sleep 5
 exec php-fpm7.3 --nodaemonize
