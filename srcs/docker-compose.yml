@@ -49,7 +49,7 @@ services:
       - mariadb
     restart: always
     volumes:
-      - db_data:/var/www/html
+      - wordpress:/var/www/html
     networks:
       - backend
     env_file:
