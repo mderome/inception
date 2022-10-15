@@ -35,7 +35,7 @@ services:
     volumes:
       - wordpress:/var/www/html/
     networks:
-      - frontend
+      - backend
     env_file:
       - .env
 
@@ -51,14 +51,13 @@ services:
     volumes:
       - db_data:/var/www/html
     networks:
-      - frontend
       - backend
     env_file:
       - .env
 
 networks:
-  backend:
-  frontend:
+  name: backend
+  driver: bridge
 
 volumes:
   db_data:
