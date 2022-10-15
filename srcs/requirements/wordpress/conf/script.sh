@@ -13,4 +13,5 @@ if  [ ! -f "$FILE" ]; then
 	touch /var/www/html/.config_create
 fi
 echo "Config already done"
+sleep 5
 exec php-fpm7.3 --nodaemonize
