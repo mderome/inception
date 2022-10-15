@@ -7,7 +7,7 @@ HOME = /home/mderome/
 all		:
 	mkdir -p $(HOME)data/wp_data
 	mkdir -p $(HOME)data/db_data
-	$(DOCKER) -f srcs/docker-compose.yml --env-file ./srcs/.env up --build
+	$(DOCKER) -f srcs/docker-compose.yml --env-file ./srcs/.env up -d --build
 
 stop	:
 	$(DOCKER) -f srcs/docker-compose.yml stop
