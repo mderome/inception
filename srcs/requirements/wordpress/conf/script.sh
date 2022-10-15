@@ -3,10 +3,10 @@ FILE=/var/www/html/.config_create
 
 if  [ ! -f "$FILE" ]; then
 	echo "Create config"
-	if[ -f /var/www/html/wp-config.php ]; then
+	if	[ -f /var/www/html/wp-config.php ]; then
 		rm /var/www/html/wp-config.php
 	fi
-	wp config create --path="/var/www/html/" --dbname=$WP_DB --dbuser=$MARIADB_USER --dbpass=$PASSWORD --dbhost=$MARIADB_USER_PWD --allow-root --skip-check
+	wp config create --path="/var/www/html/" --dbname=$WP_DB --dbuser=$MARIADB_USER --dbpass=$MARIADB_USER_PWD --allow-root --skip-check
 	echo "wp config create reussi"
 	wp core install --url="localhost" --title="mderome site" --admin_user="mderome" --admin_password="mderome.2014" --admin_email="mderome@student.42.fr" --path="/var/www/html/" --allow-root
 	wp user create draicus draicus@student.42.fr --role=author --user_pass="qwerty12" --allow-root
