@@ -1,12 +1,12 @@
 server {
         listen 443 ssl;
         listen [::]:443 ssl;
-        server_name localhost mderome.42.fr;
+        server_name mderome.42.fr mderome.42.fr;
 
         include /etc/nginx/mime.types;
         ssl     on;
-        ssl_certificate         /etc/nginx/ssl/localhost.crt;
-        ssl_certificate_key     /etc/nginx/ssl/localhost.key;
+        ssl_certificate         /etc/nginx/ssl/local.crt;
+        ssl_certificate_key     /etc/nginx/ssl/local.key;
         ssl_protocols            TLSv1.3 TLSv1.2;
 
         root /var/www/html;
